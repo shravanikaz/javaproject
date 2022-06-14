@@ -22,20 +22,23 @@ stages:
          javaHomeOption: 'JDKVersion'
          jdkVersionOption: '1.8'
          jdkArchitectureOption: 'x64'
-   stage: Deploy
-   diplayName
-  jobs:
-  - job: TestOnWindows
+   stage: DeployDev
+    diplayName: Deploy into Dev
+    dependsOn: Build
+    jobs:
+  -     job: DeployDev
+        steps:
+    -       script: echo "Deploying into DEV"
+  -     job: SecondJob
+        steps:
+    -       script: echo "second job"
+-  stage: DeploySIT
+    displayName: Deploy into SIT
+    dependsOn: DeployDev
+    jobs:
+  -     job: DeploySIT
     steps:
-    - script: echo Testing on Windows!
-  - job: TestOnLinux
-    steps:
-    - script: echo Testing on Linux!
-- stage: Deploy
-  jobs:
-  - job: Deploy
-    steps:
-    - script: echo Deploying the code!
+    -   script: echo "Deploying the code into SIT"
   
     
 
