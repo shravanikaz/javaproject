@@ -10,9 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
- - stage: Build
-   displayName: Build Process
-   jobs:
+  - stage: Build
+    displayName: Build Process
+    jobs:
     job: Maven
     steps: 
        task: Maven@3
@@ -22,13 +22,14 @@ stages:
          javaHomeOption: 'JDKVersion'
          jdkVersionOption: '1.8'
          jdkArchitectureOption: 'x64'
-   stage: DeployDev
+   
+   -stage: DeployDev
     diplayName: Deploy into Dev
     dependsOn: Build
     jobs:
-  -     job: DeployDev
-        steps:
-    -       script: echo "Deploying into DEV"
+      -job: DeployDev
+       steps:
+           -script: echo "Deploying into DEV"
   -     job: SecondJob
         steps:
     -       script: echo "second job"
