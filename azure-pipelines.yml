@@ -1,0 +1,47 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- feature-sk
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Build
+    displayName: Build Process
+    jobs:
+    job: Maven
+    steps: 
+       task: Maven@3
+       inputs:
+         mavenPomFile: 'pom.xml'
+         mavenOptions: '-Xmx3072m'
+         javaHomeOption: 'JDKVersion'
+         jdkVersionOption: '1.8'
+         jdkArchitectureOption: 'x64'
+   
+   -stage: DeployDev
+    diplayName: Deploy into Dev
+    dependsOn: Build
+    jobs:
+      -job: DeployDev
+       steps:
+           -script: echo "Deploying into DEV"
+  -     job: SecondJob
+        steps:
+    -       script: echo "second job"
+-  stage: DeploySIT
+    displayName: Deploy into SIT
+    dependsOn: DeployDev
+    jobs:
+  -     job: DeploySIT
+    steps:
+    -   script: echo "Deploying the code into SIT"
+  
+    
+
+
+- 
